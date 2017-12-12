@@ -1,0 +1,32 @@
+digraph {
+  {
+    rank=same;
+    node [style=filled,bgcolor=lightgray];
+    franquicia [shape=rectangle, label=<Franquicia<br/><font point-size="8">No paga impuestos. Hasta tres usos por año<br/>Sin fines comerciales.</font>>]
+    simplificado [shape=rectangle, label=<Régimen simplificado<br/><font point-size="8">60% sobre total. Usos ilimitados. Mínimo USD 10</font>>]
+    despachante [shape=rectangle, label=<Requiere despachante<br/><font point-size="8">Costo variable. Persona física hasta dos veces por año.</font>>]
+    no_paga [shape=rectangle, label=<No paga impuestos>]
+    jodete [shape=rectangle label=<Jodete<br/><font point-size="8">No se puede</font>>]
+  }
+
+  opcion_mercaderia [shape=diamond,label="¿Qué querés comprar?"]
+
+  opcion_mercaderia -> opcion_precio [label="Otros"]
+  opcion_mercaderia -> no_paga [label="Libros"]
+  opcion_mercaderia -> despachante [label="Mercadería gravada por IMESI"]
+  opcion_mercaderia -> jodete [label="Un auto usado"]
+
+  opcion_precio [shape=diamond,label=<Precio (USD)?<br/><font point-size="8">Incluye envío si se incluye en la factura original.<br/>No incluye envío a Uruguay si viene por courier</font>>]
+
+  opcion_precio -> opcion_franquicia [label="≤50"]
+  opcion_franquicia [shape=diamond,label="Usando franquicia?"]
+  opcion_franquicia -> franquicia [label="Sí"]
+  opcion_franquicia -> simplificado [label="No"]
+
+  opcion_precio -> opcion_envio [label="≤200"]
+  opcion_envio [shape=diamond,label="Modo de envío"]
+  opcion_envio -> opcion_franquicia [label="EMS o courier"]
+  opcion_envio -> simplificado [label="Correo común"]
+
+  opcion_precio -> despachante [label=">200"]
+}
